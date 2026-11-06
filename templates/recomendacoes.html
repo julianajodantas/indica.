@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block titulo %}Explorar | INDICA{% endblock %}
+{% block conteudo %}
+<section class="pagina-topo">
+    <span class="etiqueta">DESCUBRA ALGO NOVO</span>
+    <h1>Explore indicações</h1>
+    <p>Encontre sua próxima leitura, sessão ou trilha sonora.</p>
+</section>
+
+<form method="GET" class="filtros">
+    <input type="search" name="busca" value="{{ busca_atual }}" placeholder="Pesquisar por título ou descrição">
+    <select name="categoria">
+        <option value="">Todas as categorias</option>
+        {% for cat in ['Livro', 'Filme', 'Série', 'Música'] %}
+        <option value="{{ cat }}" {% if categoria_atual == cat %}selected{% endif %}>{{ cat }}</option>
+        {% endfor %}
+    </select>
+    <button class="botao" type="submit">Buscar</button>
+</form>
+
+{% if recomendacoes %}
+<div class="grade">
+    {% for item in recomendacoes %}
+    <article class="card">
+        <span class="categoria">{{ item.categoria }}</span>
+        <h3>{{ item.titulo }}</h3>
+        <p>{{ item.descricao or 'Sem descrição.' }}</p>
+        <div class="card-rodape">
+            <span>★ {{ item.avaliacao }}</span>
+            <small>Por {{ item.autor or 'Usuário' }}</small>
+        </div>
+        {% if session.get('usuario_id') %}
+        <form method="POST" action="{{ url_for('favoritar', recomendacao_id=item.id) }}">
+            <button class="botao pequeno secundario" type="submit">♡ Favoritar</button>
+        </form>
+        {% endif %}
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<div class="vazio">Nenhuma recomendação encontrada. Tente outro termo ou categoria.</div>
+{% endif %}
+{% endblock %}

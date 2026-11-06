@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Favoritos | INDICA{% endblock %}
+{% block conteudo %}
+<section class="pagina-topo">
+    <span class="etiqueta">SUA COLEÇÃO</span>
+    <h1>Meus favoritos</h1>
+    <p>Indicações que você quer guardar para depois.</p>
+</section>
+{% if recomendacoes %}
+<div class="grade">
+    {% for item in recomendacoes %}
+    <article class="card">
+        <span class="categoria">{{ item.categoria }}</span>
+        <h3>{{ item.titulo }}</h3>
+        <p>{{ item.descricao or 'Sem descrição.' }}</p>
+        <div class="card-rodape">
+            <span>★ {{ item.avaliacao }}</span>
+            <small>Por {{ item.autor or 'Usuário' }}</small>
+        </div>
+        <form method="POST" action="{{ url_for('desfavoritar', recomendacao_id=item.id) }}">
+            <button class="botao pequeno secundario" type="submit">Remover dos favoritos</button>
+        </form>
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<div class="vazio">Você ainda não salvou nenhuma indicação.</div>
+{% endif %}
+{% endblock %}

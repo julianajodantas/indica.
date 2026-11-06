@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block titulo %}INDICA | Descubra algo novo{% endblock %}
+{% block conteudo %}
+<section class="hero">
+    <div>
+        <span class="etiqueta">SUA PRÓXIMA DESCOBERTA COMEÇA AQUI</span>
+        <h1>Boas indicações<br>merecem ser <span>compartilhadas.</span></h1>
+        <p>Descubra livros, filmes, séries e músicas recomendados por outras pessoas.</p>
+        <div class="acoes">
+            <a class="botao" href="{{ url_for('listar_recomendacoes') }}">Explorar recomendações</a>
+            {% if session.get('usuario_id') %}
+                <a class="botao secundario" href="{{ url_for('adicionar') }}">Fazer indicação</a>
+            {% else %}
+                <a class="botao secundario" href="{{ url_for('cadastro') }}">Participar</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="hero-card">
+        <div class="bolinha">✦</div>
+        <p class="mini-titulo">UMA BOA DESCOBERTA</p>
+        <h2>Seu próximo favorito pode estar aqui.</h2>
+        <p>Inspire-se nas escolhas de outros estudantes.</p>
+    </div>
+</section>
+
+<section class="secao">
+    <div class="cabecalho-secao">
+        <div>
+            <span class="etiqueta">COMPARTILHADOS PELA COMUNIDADE</span>
+            <h2>Últimas indicações</h2>
+        </div>
+        <a class="link" href="{{ url_for('listar_recomendacoes') }}">Ver todas →</a>
+    </div>
+    {% if recomendacoes %}
+    <div class="grade">
+        {% for item in recomendacoes %}
+        <article class="card">
+            <span class="categoria">{{ item.categoria }}</span>
+            <h3>{{ item.titulo }}</h3>
+            <p>{{ item.descricao or 'Sem descrição.' }}</p>
+            <div class="card-rodape">
+                <span>★ {{ item.avaliacao }}</span>
+                <small>Por {{ item.autor or 'Usuário' }}</small>
+            </div>
+            {% if session.get('usuario_id') %}
+            <form method="POST" action="{{ url_for('favoritar', recomendacao_id=item.id) }}">
+                <button class="botao pequeno secundario" type="submit">♡ Favoritar</button>
+            </form>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="vazio">Ainda não há indicações. Seja a primeira pessoa a publicar!</div>
+    {% endif %}
+</section>
+{% endblock %}

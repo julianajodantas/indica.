@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}INDICA{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="topo">
+    <a class="logo" href="{{ url_for('inicio') }}">indica<span>.</span></a>
+    <nav>
+        <a href="{{ url_for('inicio') }}">Início</a>
+        <a href="{{ url_for('listar_recomendacoes') }}">Explorar</a>
+        {% if session.get('usuario_id') %}
+            <a href="{{ url_for('adicionar') }}">Publicar</a>
+            <a href="{{ url_for('favoritos') }}">Favoritos</a>
+            <a href="{{ url_for('logout') }}">Sair</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Entrar</a>
+            <a class="nav-destaque" href="{{ url_for('cadastro') }}">Criar conta</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main class="container">
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+        {% if mensagens %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="mensagem {{ categoria }}">{{ mensagem }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {% block conteudo %}{% endblock %}
+</main>
+
+<footer>
+    <p>INDICA — compartilhe o que vale a pena descobrir.</p>
+</footer>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

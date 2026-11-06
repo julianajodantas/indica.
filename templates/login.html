@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block titulo %}Entrar | INDICA{% endblock %}
+{% block conteudo %}
+<section class="formulario-pagina">
+    <span class="etiqueta">QUE BOM TER VOCÊ AQUI</span>
+    <h1>Entre na sua conta</h1>
+    <p>Continue descobrindo e compartilhando.</p>
+    <form method="POST" class="formulario">
+        <label>E-mail</label>
+        <input type="email" name="email" placeholder="voce@email.com" required>
+        <label>Senha</label>
+        <input type="password" name="senha" placeholder="Sua senha" required>
+        <button class="botao largura-total" type="submit">Entrar</button>
+    </form>
+    <p class="texto-centro">Ainda não tem conta? <a class="link" href="{{ url_for('cadastro') }}">Cadastre-se</a></p>
+</section>
+{% endblock %}

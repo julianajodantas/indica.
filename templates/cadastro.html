@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block titulo %}Criar conta | INDICA{% endblock %}
+{% block conteudo %}
+<section class="formulario-pagina">
+    <span class="etiqueta">FAÇA PARTE DA COMUNIDADE</span>
+    <h1>Crie sua conta</h1>
+    <p>Compartilhe suas descobertas com outras pessoas.</p>
+    <form method="POST" class="formulario">
+        <label>Nome</label>
+        <input type="text" name="nome" placeholder="Seu nome" required maxlength="100">
+        <label>E-mail</label>
+        <input type="email" name="email" placeholder="voce@email.com" required maxlength="150">
+        <label>Senha</label>
+        <input type="password" name="senha" placeholder="Mínimo de 6 caracteres" required minlength="6">
+        <button class="botao largura-total" type="submit">Criar conta</button>
+    </form>
+    <p class="texto-centro">Já tem uma conta? <a class="link" href="{{ url_for('login') }}">Entrar</a></p>
+</section>
+{% endblock %}

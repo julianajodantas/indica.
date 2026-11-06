@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block titulo %}Publicar indicação | INDICA{% endblock %}
+{% block conteudo %}
+<section class="formulario-pagina formulario-largo">
+    <span class="etiqueta">COMPARTILHE UMA DESCOBERTA</span>
+    <h1>Nova indicação</h1>
+    <p>Conte para a comunidade algo que você recomenda.</p>
+    <form method="POST" class="formulario">
+        <label>Título</label>
+        <input type="text" name="titulo" placeholder="Nome do livro, filme, série ou música" required maxlength="150">
+        <label>Categoria</label>
+        <select name="categoria" required>
+            <option value="">Selecione uma categoria</option>
+            <option>Livro</option>
+            <option>Filme</option>
+            <option>Série</option>
+            <option>Música</option>
+        </select>
+        <label>Sua avaliação</label>
+        <select name="avaliacao" required>
+            <option value="5">5 — Amei</option>
+            <option value="4">4 — Muito bom</option>
+            <option value="3">3 — Bom</option>
+            <option value="2">2 — Regular</option>
+            <option value="1">1 — Não gostei</option>
+        </select>
+        <label>Descrição e opinião</label>
+        <textarea name="descricao" rows="5" placeholder="O que torna esse conteúdo especial?"></textarea>
+        <button class="botao largura-total" type="submit">Publicar indicação</button>
+    </form>
+</section>
+{% endblock %}
